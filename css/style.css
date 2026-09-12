@@ -1,0 +1,205 @@
+/* style.css — Stock Opname Mandiri, tema iOS modern (gray/white) */
+
+:root {
+  --som-bg: #F2F3F5;
+  --som-surface: #FFFFFF;
+  --som-surface-2: #F8F9FA;
+  --som-border: #E4E6EA;
+  --som-text: #1C1C1E;
+  --som-text-soft: #6E6E73;
+  --som-accent: #0A84FF;
+  --som-accent-soft: #E8F2FF;
+  --som-success: #34C759;
+  --som-warning: #FF9F0A;
+  --som-danger: #FF3B30;
+  --som-radius-lg: 22px;
+  --som-radius-md: 16px;
+  --som-radius-sm: 10px;
+  --som-shadow: 0 8px 30px rgba(20, 20, 30, 0.06);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  background: var(--som-bg);
+  color: var(--som-text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
+  overscroll-behavior-y: none;
+}
+
+::-webkit-scrollbar { width: 0; height: 0; }
+
+.som-safe-top { padding-top: env(safe-area-inset-top); }
+.som-safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+/* Nav bar translucent ala iOS */
+.som-navbar {
+  position: sticky; top: 0; z-index: 30;
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--som-border);
+}
+
+/* Bottom tab bar */
+.som-tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  background: rgba(255,255,255,0.86);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid var(--som-border);
+}
+.som-tab-item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  color: var(--som-text-soft); font-size: 11px; padding: 6px 2px;
+  transition: color .15s ease, transform .15s ease;
+}
+.som-tab-item.active { color: var(--som-accent); }
+.som-tab-item:active { transform: scale(0.92); }
+
+.som-card {
+  background: var(--som-surface);
+  border-radius: var(--som-radius-lg);
+  box-shadow: var(--som-shadow);
+  border: 1px solid var(--som-border);
+}
+
+.som-input {
+  background: var(--som-surface-2);
+  border: 1px solid var(--som-border);
+  border-radius: var(--som-radius-sm);
+  padding: 12px 14px;
+  font-size: 16px;
+  width: 100%;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.som-input:focus {
+  outline: none;
+  border-color: var(--som-accent);
+  box-shadow: 0 0 0 4px var(--som-accent-soft);
+}
+
+.som-btn {
+  border-radius: var(--som-radius-sm);
+  padding: 13px 18px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: transform .12s ease, filter .12s ease;
+}
+.som-btn:active { transform: scale(0.97); filter: brightness(0.96); }
+.som-btn-primary { background: var(--som-accent); color: #fff; }
+.som-btn-secondary { background: var(--som-surface-2); color: var(--som-text); border: 1px solid var(--som-border); }
+.som-btn-danger { background: #FFECEC; color: var(--som-danger); }
+.som-btn-success { background: #E9FBEF; color: #1F9D45; }
+
+/* Bottom sheet modal */
+.som-sheet-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.32);
+  backdrop-filter: blur(2px);
+  z-index: 60;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease;
+}
+.som-sheet-backdrop.show { opacity: 1; pointer-events: auto; }
+
+.som-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 61;
+  background: var(--som-surface);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.12);
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.32,.72,0,1);
+  max-height: 88vh;
+  overflow-y: auto;
+}
+.som-sheet.show { transform: translateY(0); }
+.som-sheet-handle {
+  width: 36px; height: 5px; border-radius: 3px; background: #D1D1D6;
+  margin: 10px auto;
+}
+
+.som-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px;
+}
+.som-badge-success { background: #E9FBEF; color: #1F9D45; }
+.som-badge-warning { background: #FFF4E5; color: #B26A00; }
+.som-badge-danger { background: #FFECEC; color: #D6362A; }
+.som-badge-neutral { background: #F1F1F4; color: #6E6E73; }
+
+/* Skeleton loading */
+.som-skeleton {
+  background: linear-gradient(90deg, #ECEDEF 25%, #F5F6F7 37%, #ECEDEF 63%);
+  background-size: 400% 100%;
+  animation: som-shimmer 1.4s ease infinite;
+  border-radius: var(--som-radius-sm);
+}
+@keyframes som-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+/* Spinner */
+.som-spinner {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 3px solid rgba(10,132,255,0.18);
+  border-top-color: var(--som-accent);
+  animation: som-spin .7s linear infinite;
+}
+@keyframes som-spin { to { transform: rotate(360deg); } }
+
+/* Toast */
+#som-toast-container {
+  position: fixed; top: calc(env(safe-area-inset-top) + 12px); left: 50%; transform: translateX(-50%);
+  z-index: 100; display: flex; flex-direction: column; gap: 8px; align-items: center;
+  width: 100%; max-width: 420px; padding: 0 16px;
+}
+.som-toast {
+  background: rgba(28,28,30,0.92); color: #fff; font-size: 14px; font-weight: 500;
+  padding: 12px 16px; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  width: 100%; text-align: center;
+  animation: som-toast-in .25s ease;
+}
+@keyframes som-toast-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Scanner viewfinder */
+.som-scan-box {
+  position: relative; border-radius: 20px; overflow: hidden; background: #000;
+}
+.som-scan-frame {
+  position: absolute; inset: 15% 12%;
+  border: 2.5px solid rgba(255,255,255,0.85);
+  border-radius: 18px;
+  box-shadow: 0 0 0 999px rgba(0,0,0,0.35);
+}
+.som-scan-laser {
+  position: absolute; left: 12%; right: 12%; height: 2px;
+  background: linear-gradient(90deg, transparent, #34C759, transparent);
+  animation: som-scan-move 1.8s ease-in-out infinite;
+}
+@keyframes som-scan-move {
+  0% { top: 16%; }
+  50% { top: 82%; }
+  100% { top: 16%; }
+}
+.som-focus-dot {
+  position: absolute; width: 56px; height: 56px; border: 2px solid #FFD60A;
+  border-radius: 50%; transform: translate(-50%, -50%) scale(1.3);
+  opacity: 0; pointer-events: none;
+}
+.som-focus-dot.show { animation: som-focus-pulse .6s ease forwards; }
+@keyframes som-focus-pulse {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+}
+
+.som-fade-in { animation: som-fade .25s ease; }
+@keyframes som-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Password eye toggle */
+.som-pw-wrap { position: relative; }
+.som-pw-toggle {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  color: var(--som-text-soft); cursor: pointer;
+}
